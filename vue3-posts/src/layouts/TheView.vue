@@ -1,11 +1,13 @@
 <template>
   <main>
     <div class="container py-4">
-      <h2>Hello Vue 3</h2>
+      <RouterView></RouterView>
     </div>
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+import { RouterView } from 'vue-router'
+</script>
 
 <style lang="scss" scoped></style>
