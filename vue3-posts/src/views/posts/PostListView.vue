@@ -32,9 +32,19 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const posts = ref([])
-const fetchPosts = () => {
-  posts.value = getPosts()
-  console.log('test', posts.value)
+const fetchPosts = async() => {
+
+
+  // 방법 1 [ async 사용 ]
+  // const {data} = await getPosts()
+  // posts.value = data
+
+  // 방법 2 [ promise 사용]
+  // getPosts().then((response) => {
+  //   console.log('response', response)
+  // }) .catch(error => {
+  //   console.log('error:', error)
+  // })
 }
 fetchPosts()
 
