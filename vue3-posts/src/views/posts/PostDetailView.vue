@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h2>{{ form.title }}</h2>
-    <p>{{ form.content }}</p>
-    <p class="text-muted">{{ form.createdAt }}</p>
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    <p class="text-muted">{{ post.createdAt }}</p>
     <hr class="my-4" />
     <div class="row g-2">
       <div class="col-auto">
@@ -16,10 +16,10 @@
         <button class="btn btn-outline-dark" @click="goListPage">목록</button>
       </div>
       <div class="col-auto">
-        <button class="btn btn-outline-primary" @click="goEditPage">수정</button>
+        <button class="btn btn-outline-primary" @click="goEditPage(post.id)">수정</button>
       </div>
       <div class="col-auto">
-        <button class="btn btn-outline-danger">석제</button>
+        <button class="btn btn-outline-danger" @click="remove">삭제</button>
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { getPostByID } from '@/api/posts.js'
+import { getPostByID, deletePost } from '@/api/posts.js'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -38,13 +38,36 @@ const router = useRouter()
 // const route = useRoute()
 // const id = route.params.id
 
-const form = ref({})
+const post = ref({})
 
-const fetchPost = () => {
-  const data = getPostByID(props.id)
-  form.value = { ...data }
+const fetchPost = async () => {
+  try {
+    const { data } = await getPostByID(props.id)
+    setPost(data)
+  } catch (error) {
+    console.log(error)
+  }
 }
+
+const setPost = ({ title, content, createAt }) => {
+  post.value.title = title
+  post.value.content = content
+  post.value.createdAt = createAt
+}
+
 fetchPost()
+
+const remove = async () => {
+  try {
+    if (confirm('삭제 하시겠습니까?') === false) {
+      return
+    }
+    await deletePost(props.id)
+    router.push({ name: 'PostList' })
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 const goListPage = () => {
   router.push({
@@ -52,10 +75,10 @@ const goListPage = () => {
   })
 }
 
-const goEditPage = () => {
+const goEditPage = (id) => {
   router.push({
     name: 'PostEdit',
-    params: { id: props.id }
+    params: { id }
   })
 }
 </script>

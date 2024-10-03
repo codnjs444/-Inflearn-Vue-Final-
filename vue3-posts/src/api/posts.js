@@ -13,17 +13,17 @@ export function getPosts() {
 }
 
 export function getPostByID(id) {
-  return axios.get('http://localhost:5000/posts/${id}')
+  return axios.get(`http://localhost:5000/posts/${id}`)
 }
 
 export function createPost(data) {
-  return axios.post('http://localhost:5000/posts',data)
+  return axios.post('http://localhost:5000/posts', data)
 }
 
-export function updatePost(data,id) {
-  return axios.put('http://localhost:5000/posts/${id}',data)
+export function updatePost(data, id) {
+  return axios.put(`http://localhost:5000/posts/${id}`, data)
 }
 
 export function deletePost(id) {
-  return axios.delete('http://localhost:5000/posts/${id}')
+  return axios.delete(`http://localhost:5000/posts/${id}`)
 }
