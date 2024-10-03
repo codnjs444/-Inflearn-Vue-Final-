@@ -31,7 +31,7 @@ import { getPostByID, deletePost } from '@/api/posts.js'
 import { ref } from 'vue'
 
 const props = defineProps({
-  id: Number
+  id: String
 })
 
 const router = useRouter()
@@ -49,10 +49,10 @@ const fetchPost = async () => {
   }
 }
 
-const setPost = ({ title, content, createAt }) => {
+const setPost = ({ title, content, createdAt }) => {
   post.value.title = title
   post.value.content = content
-  post.value.createdAt = createAt
+  post.value.createdAt = createdAt
 }
 
 fetchPost()

@@ -52,7 +52,7 @@
     </nav>
     <hr class="my-5" />
     <AppCard>
-      <PostDetail :id="1"></PostDetail>
+      <PostDetail :id="String(1)" />
     </AppCard>
   </div>
 </template>
