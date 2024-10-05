@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es6", // 사용할 JavaScript 버전
-    "module": "esnext", // ES 모듈 방식 사용
-    "checkJs": false, // TypeScript가 JS 파일에서 오류를 검사하지 않도록 설정
-    "jsx": "preserve", // Vue와 함께 JSX를 사용할 경우 설정
+    "target": "es6",
+    "module": "esnext",
+    "checkJs": false, // JS 파일에서 오류 검사 비활성화
+    "jsx": "preserve",
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -12,6 +12,8 @@
     "node_modules",
     "dist",
     "**/*.ts", // TypeScript 파일 제외
-    "**/*.vue" // Vue 파일에서 TypeScript 검사 제외
+    "tsconfig.json", // tsconfig.json 파일 제외
+    "jsconfig.json", // jsconfig.json 파일 제외
+    "**/*.vue" // Vue 파일도 오류 검사 제외
   ]
 }
