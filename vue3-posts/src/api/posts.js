@@ -13,8 +13,12 @@ export function createPost(data) {
   return posts.post('', data)
 }
 
+// export function updatePost(data, id) {
+//   return posts.put(`/${id}`, data)
+// }
+
 export function updatePost(data, id) {
-  return posts.put(`/${id}`, data)
+  return posts.patch(`/${id}`, data)
 }
 
 export function deletePost(id) {
