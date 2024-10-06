@@ -1,6 +1,6 @@
 <template>
   <form>
-    <div class="mb-3">
+    <div class="d-flex gap-2 mt-4">
       <label for="exampleFormControlInput1" class="form-label">제목</label>
       <input
         :value="title"
@@ -20,7 +20,9 @@
         rows="3"
       ></textarea>
     </div>
-    <slot name="actions"></slot>
+    <div class="d-flex gap-2 mt-4">
+      <slot name="actions"></slot>
+    </div>
   </form>
 </template>
 

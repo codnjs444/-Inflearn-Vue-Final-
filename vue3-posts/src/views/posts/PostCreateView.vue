@@ -4,10 +4,8 @@
     <hr class="my-4" />
     <PostForm v-model:title="form.title" v-model:content="form.content" @submit.prevent.save>
       <template #actions>
-        <div class="pt-4">
-          <button class="btn btn-primary me-2" @click="save">저장</button>
-          <button type="button" class="btn btn-outline-dark ma-2" @click="goListPage">목록</button>
-        </div>
+        <button class="btn btn-primary me-2" @click="save">저장</button>
+        <button type="button" class="btn btn-outline-dark ma-2" @click="goListPage">목록</button>
       </template>
     </PostForm>
   </div>
