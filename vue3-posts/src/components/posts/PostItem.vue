@@ -20,8 +20,6 @@
 <script setup>
 import { defineEmits } from 'vue'
 
-import AppCard from '../AppCard.vue'
-
 // Props 정의
 defineProps({
   title: {

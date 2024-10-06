@@ -9,23 +9,20 @@
     <AppCard> {{ item }} </AppCard>
   </AppGrid>
   <hr class="my-4" />
-  <h2>{{ $person.name }}</h2>
+  <!-- <h2>{{ $person.name }}</h2> -->
 </template>
 
-<script>
+<!-- <script>
 export default {
   created() {
     console.log(this.$person.name)
   }
 }
-</script>
+</script> -->
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { inject, ref } from 'vue'
-
-import AppGrid from '../components/AppGrid.vue'
-import AppCard from '../components/AppCard.vue'
+import { ref } from 'vue'
 
 const router = useRouter()
 const goAboutPage = () => {
@@ -33,8 +30,8 @@ const goAboutPage = () => {
 }
 const items = ref(['사과', '딸기', '배', '포도'])
 
-const person = inject('person')
-console.log('person.name', person.name)
+// const person = inject('person')
+// console.log('person.name', person.name)
 </script>
 
 <style lang="scss" scoped></style>

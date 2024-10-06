@@ -21,7 +21,6 @@
 
 <script setup>
 import { computed } from 'vue'
-import AppModal from '../../components/AppModal.vue'
 
 // Props 정의
 const props = defineProps({
