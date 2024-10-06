@@ -7,11 +7,22 @@
     <p class="text-muted">
       {{ createAt }}
     </p>
+    <template #footer>
+      <div class="d-flex flex-row-reverse">
+        <button class="btn p-0" @click.stop="$emit('modal')">
+          <i class="bi bi-emoji-sunglasses"></i>
+        </button>
+      </div>
+    </template>
   </AppCard>
 </template>
 
 <script setup>
+import { defineEmits } from 'vue'
+
 import AppCard from '../AppCard.vue'
+
+// Props 정의
 defineProps({
   title: {
     type: String,
@@ -24,6 +35,9 @@ defineProps({
     type: [String, Date, Number]
   }
 })
+
+// emits를 배열 형태로 정의
+defineEmits(['modal'])
 </script>
 
 <style lang="scss" scoped></style>
