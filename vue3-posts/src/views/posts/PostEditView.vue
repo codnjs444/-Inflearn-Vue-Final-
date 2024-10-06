@@ -2,13 +2,27 @@
   <div>
     <h2>게시글 수정</h2>
     <hr class="my-4" />
-    <PostForm v-model:title="form.title" v-model:content="form.content" @submit.prevent="edit">
-      <template #actions> </template>
+    <PostForm
+      v-model:title="form.title"
+      v-model:content="form.content"
+      @submit.prevent="edit"
+    >
+      <template #actions>
+        <button
+          type="button"
+          class="btn btn-outline-danger ma-2"
+          @click="goDetailPage"
+        >
+          취소
+        </button>
+        <button class="btn btn-primary">수정</button>
+      </template>
     </PostForm>
-    <form @submit.prevent="edit">
-      <button class="btn btn-primary me-2">수정</button>
-      <button type="button" class="btn btn-outline-danger ma-2" @click="goDetailPage">취소</button>
-    </form>
+    <AppAlert
+      :show="showAlert"
+      :message="alertMessage"
+      :type="alertType || 'error'"
+    />
   </div>
 </template>
 
@@ -18,6 +32,7 @@ import { getPostByID, updatePost } from '@/api/posts.js'
 import { ref } from 'vue'
 
 import PostForm from '../../components/posts/PostForm.vue'
+import AppAlert from '../../components/AppAlert.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -34,6 +49,7 @@ const fetchPost = async () => {
     setForm(data)
   } catch (error) {
     console.error(error)
+    vAlert('네트워크 오류', 'error')
   }
 }
 
@@ -47,13 +63,26 @@ fetchPost()
 const edit = async () => {
   try {
     await updatePost({ ...form.value }, id)
-    router.push({ name: 'PostDetail', params: { id } })
+    vAlert('수정이 완료되었습니다.', 'success')
+    // router.push({ name: 'PostDetail', params: { id } })
   } catch (error) {
     console.log(error)
   }
 }
 
 const goDetailPage = () => router.push({ name: 'PostDetail', params: { id } })
+
+const showAlert = ref(false)
+const alertMessage = ref('')
+const alertType = ref('')
+const vAlert = (message, type = 'error') => {
+  showAlert.value = true
+  alertMessage.value = message
+  alertType.value = type
+  setTimeout(() => {
+    showAlert.value = false
+  }, 2000)
+}
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,7 +1,11 @@
 <template>
   <form>
-    <div class="d-flex gap-2 mt-4">
-      <label for="exampleFormControlInput1" class="form-label">제목</label>
+    <div class="mb-3">
+      <label
+        for="exampleFormControlInput1"
+        class="form-label"
+        >제목</label
+      >
       <input
         :value="title"
         @input="$emit('update:title', $event.target.value)"
@@ -14,7 +18,9 @@
       <label for="content" class="form-label">내용</label>
       <textarea
         :value="content"
-        @input="$emit('update:content', $event.target.value)"
+        @input="
+          $emit('update:content', $event.target.value)
+        "
         class="form-control"
         id="content"
         rows="3"
