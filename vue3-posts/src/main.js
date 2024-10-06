@@ -5,14 +5,16 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import { createApp } from 'vue' // Vue.js 관련 import
 import App from './App.vue' // 메인 Vue 컴포넌트
 import router from './router' // router/index.js 파일 경로
-import funcPlugins from './plugins/func'
-import objPlugins from './plugins/obj'
-import person from './plugins/person'
+// import funcPlugins from './plugins/func'
+// import objPlugins from './plugins/obj'
+// import person from './plugins/person'
+import globalComponents from './plugins/global-components'
 
 const app = createApp(App)
-app.use(funcPlugins)
-app.use(objPlugins, { name: '이채원' })
-app.use(person, { name: '홍길동' })
+app.use(globalComponents)
+// app.use(funcPlugins)
+// app.use(objPlugins, { name: '이채원' })
+// app.use(person, { name: '홍길동' })
 app.use(router)
 app.mount('#app') // 애플리케이션 초기화 및 마운트
 
