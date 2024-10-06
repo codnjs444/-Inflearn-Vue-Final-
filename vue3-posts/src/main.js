@@ -5,13 +5,25 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import { createApp } from 'vue' // Vue.js 관련 import
 import App from './App.vue' // 메인 Vue 컴포넌트
 import router from './router' // router/index.js 파일 경로
+
+// focus 기능을 하는 directives 내용 (아래 globalDirectives에 포함됨)
+import focus from '@/directives/focus'
+
+// 전역 커스텀 디렉티브 사용
+import globalDirectives from './plugins/global-directives'
+
 // import funcPlugins from './plugins/func'
 // import objPlugins from './plugins/obj'
 // import person from './plugins/person'
 import globalComponents from './plugins/global-components'
 
 const app = createApp(App)
+// app.directive('focus',focus)
+
 app.use(globalComponents)
+// globalDirectives 사용
+app.use(globalDirectives)
+
 // app.use(funcPlugins)
 // app.use(objPlugins, { name: '이채원' })
 // app.use(person, { name: '홍길동' })
