@@ -81,7 +81,7 @@ const pageCount = computed(() =>
 const fetchPosts = async () => {
   try {
     const { data, headers } = await getPosts(params.value) // async/await 방식
-    console.log('params:', params.value) // 쿼리 파라미터 확인
+    // console.log('params:', params.value) // 쿼리 파라미터 확인
 
     posts.value = data
     totalCount.value = headers['x-total-count']
