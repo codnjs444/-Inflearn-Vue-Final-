@@ -8,6 +8,7 @@
       >
       <input
         v-focus
+        v-color="'blue'"
         :value="title"
         @input="$emit('update:title', $event.target.value)"
         type="text"
@@ -46,6 +47,7 @@ defineProps({
 })
 
 defineEmits(['update:title', 'update:content'])
+
 </script>
 
 <style lang="scss" scoped></style>
