@@ -12,6 +12,9 @@ import focus from '@/directives/focus'
 // 전역 커스텀 디렉티브 사용
 import globalDirectives from './plugins/global-directives'
 
+// day.js 플러그인 사용
+import dayjs from './plugins/dayjs'
+
 // import funcPlugins from './plugins/func'
 // import objPlugins from './plugins/obj'
 // import person from './plugins/person'
@@ -28,6 +31,7 @@ app.use(globalDirectives)
 // app.use(objPlugins, { name: '이채원' })
 // app.use(person, { name: '홍길동' })
 app.use(router)
+app.use(dayjs)
 app.mount('#app') // 애플리케이션 초기화 및 마운트
 
 // console.log('MODE:', import.meta.env.MODE)
