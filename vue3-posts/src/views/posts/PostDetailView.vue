@@ -48,8 +48,8 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { getPostByID, deletePost } from '@/api/posts.js'
-import { ref } from 'vue'
+import { useAlert } from '../../composables/alert'
+import { useAxios } from '@/hooks/useAxios'
 
 const props = defineProps({
   id: [String, Number]
@@ -59,47 +59,34 @@ const router = useRouter()
 // const route = useRoute()
 // const id = route.params.id
 
-const post = ref({})
-const error = ref(null)
-const loading = ref(false)
+const { vAlert, vSuccess } = useAlert()
 
-const fetchPost = async () => {
-  try {
-    loading.value = true
-    const { data } = await getPostByID(props.id)
-    setPost(data)
-  } catch (err) {
-    console.error(error)
-    error.value = err
-  } finally {
-    loading.value = false
+const { error, loading, data: post } = useAxios(`/posts/${props.id}`)
+
+const {
+  error: removeError,
+  loading: removeLoading,
+  execute
+} = useAxios(
+  `/posts/${props.id}`, // 백틱 사용으로 템플릿 리터럴 적용
+  { method: 'DELETE' }, // HTTP 메서드는 대문자로 표기하는 것이 일반적입니다.
+  {
+    immediate: false,
+    onSuccess: () => {
+      vSuccess('삭제가 완료되었습니다.')
+      router.push({ name: 'PostList' })
+    },
+    onError: (err) => {
+      vAlert(err.message) // err를 제대로 받아서 사용
+    }
   }
-}
-
-const setPost = ({ title, content, createdAt }) => {
-  post.value.title = title
-  post.value.content = content
-  post.value.createdAt = createdAt
-}
-
-fetchPost()
-const removeError = ref(null)
-const removeLoading = ref(false)
+)
 
 const remove = async () => {
-  try {
-    if (confirm('삭제 하시겠습니까?') === false) {
-      return
-    }
-    removeLoading.value = true
-    await deletePost(props.id)
-    router.push({ name: 'PostList' })
-  } catch (err) {
-    console.log(err)
-    removeError.value = err
-  } finally {
-    removeLoading.value = false
+  if (!confirm('삭제 하시겠습니까?')) {
+    return
   }
+  execute()
 }
 
 const goListPage = () => {
