@@ -7,7 +7,7 @@
         <div class="col-3 text-muted">내용</div>
         <div class="col-9">{{ content }}</div>
         <div class="col-3 text-muted">등록일</div>
-        <div class="col-9">{{ createdAt }}</div>
+        <div class="col-9">{{ createdDate }}</div>
       </div>
     </template>
     <template #actions>
@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 
 // Props 정의
 const props = defineProps({
@@ -47,6 +47,12 @@ const show = computed({
 const closeModal = () => {
   show.value = false
 }
+
+const dayjs = inject('dayjs')
+
+const createdDate = computed(() =>
+  dayjs(props.createAt).format('YYYY.MM.DD HH:mm:ss')
+)
 </script>
 
 <style lang="scss" scoped></style>

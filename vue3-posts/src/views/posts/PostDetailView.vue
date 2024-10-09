@@ -2,7 +2,9 @@
   <div>
     <h2>{{ post.title }}</h2>
     <p>{{ post.content }}</p>
-    <p class="text-muted">{{ post.createdAt }}</p>
+    <p class="text-muted">
+      {{ $dayjs(post.createdAt).format('YYYY.MM.DD HH:mm:ss') }}
+    </p>
     <hr class="my-4" />
     <div class="row g-2">
       <div class="col-auto">
@@ -16,7 +18,9 @@
         <button class="btn btn-outline-dark" @click="goListPage">목록</button>
       </div>
       <div class="col-auto">
-        <button class="btn btn-outline-primary" @click="goEditPage(post.id)">수정</button>
+        <button class="btn btn-outline-primary" @click="goEditPage(post.id)">
+          수정
+        </button>
       </div>
       <div class="col-auto">
         <button class="btn btn-outline-danger" @click="remove">삭제</button>
