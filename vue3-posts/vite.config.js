@@ -20,8 +20,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      // '/posts' 경로로 들어오는 API 요청을 'http://localhost:5000'으로 프록시 처리
-      '/posts': 'http://localhost:5000'
+      '/posts': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        secure: false
+      }
     }
   }
 })

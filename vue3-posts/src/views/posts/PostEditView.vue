@@ -1,7 +1,11 @@
 <template>
-  <div>
+  <AppLoading v-if="loading" />
+
+  <AppError v-else-if="error" :message="error.message" />
+  <div v-else>
     <h2>게시글 수정</h2>
     <hr class="my-4" />
+    <AppError v-if="editError" :message="editError.message" />
     <PostForm
       v-model:title="form.title"
       v-model:content="form.content"
@@ -16,6 +20,16 @@
           취소
         </button>
         <button class="btn btn-primary">수정</button>
+        <button class="btn btn-primary" :disabled="editLoading">
+          <template v-if="editLoading">
+            <span
+              class="spinner-grow spinner-grow-sm"
+              aria-hidden="true"
+            ></span>
+            <span class="visually-hidden" role="status">Loading...</span>
+          </template>
+          <template v-else>수정</template>
+        </button>
       </template>
     </PostForm>
     <!-- <AppAlert
@@ -35,11 +49,14 @@ import PostForm from '../../components/posts/PostForm.vue'
 
 import { useAlert } from '../../composables/alert'
 
-const { vAlert, vSuccess } = useAlert()
+const { vSuccess } = useAlert()
 
 const router = useRouter()
 const route = useRoute()
 const id = route.params.id
+
+const error = ref(null)
+const loading = ref(false)
 
 const form = ref({
   title: null,
@@ -48,11 +65,13 @@ const form = ref({
 
 const fetchPost = async () => {
   try {
+    loading.value = true
     const { data } = await getPostByID(id)
     setForm(data)
-  } catch (error) {
-    console.error(error)
-    vAlert(error.message)
+  } catch (err) {
+    error.value = err
+  } finally {
+    loading.value = false
   }
 }
 
@@ -63,13 +82,19 @@ const setForm = ({ title, content }) => {
 
 fetchPost()
 
+const editError = ref(null)
+const editLoading = ref(false)
 const edit = async () => {
   try {
+    editLoading.value = true
     await updatePost({ ...form.value }, id)
     vSuccess('수정이 완료되었습니다.')
     router.push({ name: 'PostDetail', params: { id } })
-  } catch (error) {
-    console.log(error)
+  } catch (err) {
+    console.error(err)
+    editError.value = err
+  } finally {
+    editLoading.value = false
   }
 }
 

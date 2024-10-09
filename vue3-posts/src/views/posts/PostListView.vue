@@ -9,6 +9,10 @@
     />
     <hr class="my-4" />
 
+    <AppLoading v-if="loading" />
+
+    <AppError v-else-if="error" :message="error.message" />
+
     <AppGrid :items="posts">
       <template v-slot="{ item }">
         <PostItem
@@ -57,9 +61,13 @@ import PostModal from '../../components/posts/PostModal.vue'
 
 import { getPosts } from '@/api/posts'
 import { useRouter } from 'vue-router'
+import AppLoading from '../../components/app/AppLoading.vue'
 
 const router = useRouter()
 const posts = ref([])
+
+const error = ref(null)
+const loading = ref(false)
 
 const params = ref({
   _sort: '-createdAt',
@@ -76,13 +84,16 @@ const pageCount = computed(() =>
 
 const fetchPosts = async () => {
   try {
+    loading.value = true
     const { data, headers } = await getPosts(params.value) // async/await 방식
     // console.log('params:', params.value) // 쿼리 파라미터 확인
 
     posts.value = data
     totalCount.value = headers['x-total-count']
-  } catch (error) {
-    console.error(error)
+  } catch (err) {
+    error.value = err
+  } finally {
+    loading.value = false
   }
 
   // 방법 1 [ async/await 사용 ]
@@ -128,7 +139,7 @@ const openModal = ({ title, content, createdAt }) => {
   modalContent.value = content
   modalCreatedAt.value = createdAt
 }
-const closeModal = () => (show.value = false)
+// const closeModal = () => (show.value = false)
 </script>
 
 <style lang="scss" scoped></style>
