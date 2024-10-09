@@ -23,7 +23,6 @@
       :message="alertMessage"
       :type="alertType || 'error'"
     /> -->
-    <AppAlert :items="alerts" />
   </div>
 </template>
 
@@ -33,6 +32,10 @@ import { getPostByID, updatePost } from '@/api/posts.js'
 import { ref } from 'vue'
 
 import PostForm from '../../components/posts/PostForm.vue'
+
+import { useAlert } from '../../composables/alert'
+
+const { vAlert, vSuccess } = useAlert()
 
 const router = useRouter()
 const route = useRoute()
@@ -63,8 +66,8 @@ fetchPost()
 const edit = async () => {
   try {
     await updatePost({ ...form.value }, id)
-    vAlert('수정이 완료되었습니다.', 'success')
-    // router.push({ name: 'PostDetail', params: { id } })
+    vSuccess('수정이 완료되었습니다.')
+    router.push({ name: 'PostDetail', params: { id } })
   } catch (error) {
     console.log(error)
   }
@@ -72,20 +75,21 @@ const edit = async () => {
 
 const goDetailPage = () => router.push({ name: 'PostDetail', params: { id } })
 
-// const showAlert = ref(false)
-// const alertMessage = ref('')
-// const alertType = ref('')
-const alerts = ref([])
-const vAlert = (message, type = 'error') => {
-  alerts.value.push({ message, type })
-  // showAlert.value = true
-  // alertMessage.value = message
-  // alertType.value = type
-  setTimeout(() => {
-    // showAlert.value = false
-    alerts.value.shift()
-  }, 2000)
-}
+// // const showAlert = ref(false)
+// // const alertMessage = ref('')
+// // const alertType = ref('')
+// const alerts = ref([])
+// const vAlert = (message, type = 'error') => {
+//   alerts.value.push({ message, type })
+//   // showAlert.value = true
+//   // alertMessage.value = message
+//   // alertType.value = type
+//   setTimeout(() => {
+//     // showAlert.value = false
+//     alerts.value.shift()
+//   }, 2000)
+// }
+// const vSuccess = (message) => vAlert(message, 'success')
 </script>
 
 <style lang="scss" scoped></style>
