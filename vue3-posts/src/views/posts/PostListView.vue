@@ -21,6 +21,7 @@
           :createAt="item.createAt"
           @click="goPage(item.id)"
           @modal="openModal(item)"
+          @preview="selectPreview(item.id)"
         >
         </PostItem>
       </template>
@@ -43,10 +44,10 @@
         :createdAt="modalCreatedAt"
       />
     </Teleport>
-    <template v-if="posts && posts.length > 0">
+    <template v-if="previewId">
       <hr class="my-5" />
       <AppCard>
-        <PostDetail :id="posts[0].id" />
+        <PostDetail :id="previewId" />
       </AppCard>
     </template>
   </div>
@@ -62,6 +63,9 @@ import PostModal from '../../components/posts/PostModal.vue'
 import { useRouter } from 'vue-router'
 import AppLoading from '../../components/app/AppLoading.vue'
 import { useAxios } from '@/hooks/useAxios'
+
+const previewId = ref(null)
+const selectPreview = (id) => (previewId.value = id)
 
 const router = useRouter()
 
@@ -80,7 +84,11 @@ const {
 } = useAxios('/posts', { method: 'get', params })
 
 // pagination
-const totalCount = computed(() => response.value.headers['x-total-count'])
+const totalCount = computed(() => {
+  return response.value && response.value.headers
+    ? response.value.headers['x-total-count']
+    : 0
+})
 const pageCount = computed(() =>
   Math.ceil(totalCount.value / params.value._limit)
 )

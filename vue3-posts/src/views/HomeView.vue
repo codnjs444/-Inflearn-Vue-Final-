@@ -9,6 +9,7 @@
     <AppCard> {{ item }} </AppCard>
   </AppGrid>
   <hr class="my-4" />
+  {{ position }}
   <!-- <h2>{{ $person.name }}</h2> -->
 </template>
 
@@ -22,7 +23,7 @@ export default {
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { reactive, ref, toRef, toRefs } from 'vue'
 
 const router = useRouter()
 const goAboutPage = () => {
@@ -32,6 +33,17 @@ const items = ref(['사과', '딸기', '배', '포도'])
 
 // const person = inject('person')
 // console.log('person.name', person.name)
+
+const position = reactive({
+  x: 100,
+  y: 1000
+})
+
+// const x = toRef(position, 'x')
+// const y = toRef(position, 'y')
+const { x, y } = toRefs(position)
+
+console.log(x, y)
 </script>
 
 <style lang="scss" scoped></style>

@@ -12,6 +12,9 @@
         <button class="btn p-0" @click.stop="$emit('modal')">
           <i class="bi bi-emoji-sunglasses"></i>
         </button>
+        <button class="btn p-1" @click.stop="$emit('preview')">
+          <i class="bi bi-apple"></i>
+        </button>
       </div>
     </template>
   </AppCard>
@@ -36,7 +39,7 @@ const props = defineProps({
 })
 
 // emits를 배열 형태로 정의
-defineEmits(['modal'])
+defineEmits(['modal', 'preview'])
 const createdDate = computed(() =>
   dayjs(props.createAt).format('YYYY.MM.DD HH:mm:ss')
 )
