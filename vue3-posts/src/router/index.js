@@ -11,6 +11,7 @@ import NestedView from '@/views/nested/NestedView.vue'
 import NestedOneView from '@/views/nested/NestedOneView.vue'
 import NestedTwoView from '@/views/nested/NestedTwoView.vue'
 import NestedHomeView from '@/views/nested/NestedHomeView.vue'
+import MyPage from '@/views/MyPage.vue'
 
 const routes = [
   {
@@ -69,13 +70,35 @@ const routes = [
         component: NestedTwoView
       }
     ]
+  },
+  {
+    path: '/my',
+    name: 'MyPage',
+    component: MyPage,
+    beforeEnter: [removeQueryString]
   }
 ]
+
+function removeQueryString(to) {
+  if (Object.keys(to.query).length > 0) {
+    return { path: to.path, query: {} }
+  }
+}
 
 const router = createRouter({
   history: createWebHistory('/'),
   // history: createWebHashHistory(),
   routes
 })
+
+// router.beforeEach((to, from) => {
+//   console.log('to:', to)
+//   console.log('from:', from)
+//   if (to.name === 'MyPage') {
+//     // return false
+//     // return { name: 'Home' }
+//     return '/posts'
+//   }
+// })
 
 export default router

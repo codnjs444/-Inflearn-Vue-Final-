@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRouter } from 'vue-router'
 import { useAlert } from '../../composables/alert'
 import { useAxios } from '@/hooks/useAxios'
 import { computed, toRef, toRefs } from 'vue'
@@ -110,6 +110,21 @@ const goEditPage = (id) => {
     params: { id }
   })
 }
+
+onBeforeRouteUpdate(() => {
+  console.log('onBeforeRouteUpdate')
+})
+
+onBeforeRouteLeave(() => {
+  console.log('onBeforeRouteLeave')
+})
 </script>
 
+<script>
+export default {
+  beforeRouteEnter() {
+    console.log('beforeRouteEnter')
+  }
+}
+</script>
 <style lang="scss" scoped></style>
