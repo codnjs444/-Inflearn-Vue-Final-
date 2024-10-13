@@ -3,6 +3,10 @@ import 'bootstrap/dist/js/bootstrap.js' // 외부 JavaScript 라이브러리
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import { createApp } from 'vue' // Vue.js 관련 import
+
+// Pinia 사용
+import { createPinia } from 'pinia'
+
 import App from './App.vue' // 메인 Vue 컴포넌트
 import router from './router' // router/index.js 파일 경로
 
@@ -32,6 +36,7 @@ app.use(globalDirectives)
 // app.use(person, { name: '홍길동' })
 app.use(router)
 app.use(dayjs)
+app.use(createPinia())
 app.mount('#app') // 애플리케이션 초기화 및 마운트
 
 // console.log('MODE:', import.meta.env.MODE)
